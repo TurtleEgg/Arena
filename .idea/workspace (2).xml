@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="833b9d8c-6406-4253-b1c1-1c9354f64090" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1eit0twZUZgN7rjajt4tE4VQgiJ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../games/nekirill/4d/4dgame.min.js@4" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="H:\YandexDisk\games\kirillkirin.ru" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.plasyklearn">
+    <configuration name="Field" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Arena" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\User\AppData\Local\Programs\Python\Python38-32\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Field.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="N_net_class" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Arena" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/N_net_class.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="maroccolib" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Arena" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/maroccolib.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="plasyklearn" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Arena" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/plasyklearn.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test_mean" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Arena" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_mean.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.Field" />
+      <item itemvalue="Python.N_net_class" />
+      <item itemvalue="Python.maroccolib" />
+      <item itemvalue="Python.plasyklearn" />
+      <item itemvalue="Python.test_mean" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.test_mean" />
+        <item itemvalue="Python.plasyklearn" />
+        <item itemvalue="Python.N_net_class" />
+        <item itemvalue="Python.Field" />
+        <item itemvalue="Python.maroccolib" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="833b9d8c-6406-4253-b1c1-1c9354f64090" name="Default Changelist" comment="" />
+      <created>1594816021352</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1594816021352</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="686" y="161" key="#Field" timestamp="1594837600114">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="686" y="161" key="#Field/0.0.1920.1040/1920.0.1280.760@0.0.1920.1040" timestamp="1594837600114" />
+    <state x="240" y="191" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1598111502576">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="240" y="191" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/1920.0.1280.760@0.0.1920.1040" timestamp="1597338928492" />
+    <state x="240" y="191" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/1920.0.1440.860@0.0.1920.1040" timestamp="1598111502576" />
+    <state x="240" y="206" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1119/1920.0.1280.984@0.0.1920.1119" timestamp="1597494620203" />
+    <state x="719" y="329" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1598336284169">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="719" y="329" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040/1920.0.1440.860@0.0.1920.1040" timestamp="1598336284169" />
+    <state x="670" y="125" key="#plasyklearn" timestamp="1598473767508">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="670" y="125" key="#plasyklearn/0.0.1920.1040/1920.0.1440.860@0.0.1920.1040" timestamp="1598473767508" />
+    <state x="670" y="135" key="#plasyklearn/0.0.1920.1119/1920.0.1280.984@0.0.1920.1119" timestamp="1598431421955" />
+    <state x="670" y="135" key="#test_mean" timestamp="1598256073106">
+      <screen x="0" y="0" width="1920" height="1119" />
+    </state>
+    <state x="670" y="135" key="#test_mean/0.0.1920.1119/1920.0.1280.984@0.0.1920.1119" timestamp="1598256073106" />
+    <state x="566" y="306" key="FileChooserDialogImpl" timestamp="1598453992524">
+      <screen x="0" y="0" width="1920" height="1119" />
+    </state>
+    <state x="566" y="284" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1440.860@0.0.1920.1040" timestamp="1598336265840" />
+    <state x="566" y="306" key="FileChooserDialogImpl/0.0.1920.1119/1920.0.1280.984@0.0.1920.1119" timestamp="1598453992524" />
+    <state width="1857" height="308" key="GridCell.Tab.0.bottom" timestamp="1598513031652">
+      <screen x="0" y="0" width="1920" height="1119" />
+    </state>
+    <state width="1899" height="316" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1280.760@0.0.1920.1040" timestamp="1597344634597" />
+    <state width="1899" height="316" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1440.860@0.0.1920.1040" timestamp="1598475166609" />
+    <state width="1857" height="308" key="GridCell.Tab.0.bottom/0.0.1920.1119/1920.0.1280.984@0.0.1920.1119" timestamp="1598513031652" />
+    <state width="1857" height="308" key="GridCell.Tab.0.center" timestamp="1598513031652">
+      <screen x="0" y="0" width="1920" height="1119" />
+    </state>
+    <state width="1899" height="316" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1280.760@0.0.1920.1040" timestamp="1597344634597" />
+    <state width="1899" height="316" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1440.860@0.0.1920.1040" timestamp="1598475166609" />
+    <state width="1857" height="308" key="GridCell.Tab.0.center/0.0.1920.1119/1920.0.1280.984@0.0.1920.1119" timestamp="1598513031652" />
+    <state width="1857" height="308" key="GridCell.Tab.0.left" timestamp="1598513031652">
+      <screen x="0" y="0" width="1920" height="1119" />
+    </state>
+    <state width="1899" height="316" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1280.760@0.0.1920.1040" timestamp="1597344634597" />
+    <state width="1899" height="316" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1440.860@0.0.1920.1040" timestamp="1598475166609" />
+    <state width="1857" height="308" key="GridCell.Tab.0.left/0.0.1920.1119/1920.0.1280.984@0.0.1920.1119" timestamp="1598513031652" />
+    <state width="1857" height="308" key="GridCell.Tab.0.right" timestamp="1598513031652">
+      <screen x="0" y="0" width="1920" height="1119" />
+    </state>
+    <state width="1899" height="316" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1280.760@0.0.1920.1040" timestamp="1597344634597" />
+    <state width="1899" height="316" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1440.860@0.0.1920.1040" timestamp="1598475166609" />
+    <state width="1857" height="308" key="GridCell.Tab.0.right/0.0.1920.1119/1920.0.1280.984@0.0.1920.1119" timestamp="1598513031652" />
+    <state x="146" y="136" key="SettingsEditor" timestamp="1598432240945">
+      <screen x="0" y="0" width="1920" height="1119" />
+    </state>
+    <state x="364" y="112" key="SettingsEditor/0.0.1440.860@0.0.1440.860" timestamp="1598423171132" />
+    <state x="287" y="276" key="SettingsEditor/0.0.1920.1040/1920.0.1280.760@0.0.1920.1040" timestamp="1597277100517" />
+    <state x="485" y="135" key="SettingsEditor/0.0.1920.1040/1920.0.1440.860@0.0.1920.1040" timestamp="1598294117758" />
+    <state x="146" y="136" key="SettingsEditor/0.0.1920.1119/1920.0.1280.984@0.0.1920.1119" timestamp="1598432240945" />
+    <state x="92" y="99" width="1736" height="922" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1597498626884">
+      <screen x="0" y="0" width="1920" height="1119" />
+    </state>
+    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1040/1920.0.1280.760@0.0.1920.1040" timestamp="1597272377956" />
+    <state x="92" y="99" width="1736" height="922" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1119/1920.0.1280.984@0.0.1920.1119" timestamp="1597498626884" />
+    <state x="667" y="347" key="com.intellij.ide.util.TipDialog" timestamp="1598646180600">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="500" y="287" key="com.intellij.ide.util.TipDialog/0.0.1440.860@0.0.1440.860" timestamp="1598422986379" />
+    <state x="667" y="347" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/1920.0.1280.760@0.0.1920.1040" timestamp="1597338775616" />
+    <state x="667" y="347" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/1920.0.1440.860@0.0.1920.1040" timestamp="1598646180600" />
+    <state x="623" y="286" width="672" height="678" key="search.everywhere.popup" timestamp="1597766326171">
+      <screen x="0" y="0" width="1920" height="1119" />
+    </state>
+    <state x="623" y="286" width="672" height="678" key="search.everywhere.popup/0.0.1920.1119/1920.0.1280.984@0.0.1920.1119" timestamp="1597766326171" />
+  </component>
+</project>
