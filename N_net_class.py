@@ -1,8 +1,10 @@
 import numpy as np
 import numpy.random as rand
 
+from hyper_parameters import HyperParameters
+
 class network(object):
-    def __init__(self, NN, seed=0, mutType =1, mutRate=0.05):
+    def __init__(self, NN, seed=0, hyper_parameters=HyperParameters()):
         #NL количество слоев
         #Nn количество нейронов в слое
         #Ni количество входов
@@ -21,8 +23,7 @@ class network(object):
         Ni = NN[2]
         No = NN[3]
 
-        self.mutRate=mutRate
-        self.mutType=mutType
+        self.hyper_parameters = hyper_parameters
         if seed==0:
             rand.seed()
             #seedo=rand.randint(0, 2 ** 16)
@@ -68,7 +69,8 @@ class network(object):
 
     def mutate(self):
         rand.seed()
-        rate=self.mutRate #максимально возможное изменение веса
+        rate=self.hyper_parameters.mut_rate #максимально возможное изменение веса
+        mutType = self.hyper_parameters.mut_type
         NL = self.NL
         Nn = self.Nn
         Ni = self.Ni
@@ -123,7 +125,7 @@ class network(object):
             return Mat
 
 
-        if self.mutType==1:
+        if mutType==1:
             # все веса и пороги меняются случайным образом, максимум на величину Rate
             self.B = randUpdate(B, rate, (Nn, NL))
             self.W = randUpdate(W, rate, (Nn, Nn, NL))
@@ -134,7 +136,7 @@ class network(object):
 
 
 
-        elif self.mutType==2:
+        elif mutType==2:
             # меняется один случайный вес, максимум на величину rate
 
             # подсчитываем количество элементов
@@ -173,3 +175,4 @@ class network(object):
         return 0
 
 # Test
+

@@ -1,3 +1,6 @@
+from enum import Enum, unique
+from typing import Any, Dict, List, Set, int
+
 import maroccolib as mc
 import numpy as np
 import math
@@ -7,30 +10,39 @@ from N_net_class import network
 import datetime
 import pandas as pd
 
-from maroccolib import field, bot, round, plot_round
-
+from maroccolib import field, bot, round, plot_round, Population
 
 import csv
-FILENAME = "file_V_NL4.csv"
+OUTPUT_FILENAME = "file_V_NL4.csv"
+
+rand.seed()
+
+class InitType(Enum):
+    GENERATE = 0
+    FROM_CHAMPS = 1
+    POPULATION = 2
+
 
 # 0 - generate randomly
-# 1 - retrieve from file
-firstGenGetFrom=1
-inputfilename="BestPoints_NL4_8gen.csv"
+# 1 - retrieve champions from file and mutate childs
+# 2 - retrieve population from file
+init_type = InitType.GENERATE
+input_file_name= "BestPoints_NL4_8gen.csv"
 NN = [4, 6, 6, 5]
 W_start, W_end, B_start, B_end, Wi_start, Wi_end, Bi_start, Bi_end, Wo_start, Wo_end, Bo_start, numParams=mc.numParams(NN)
 num_steps = 100
 dt = 1 / num_steps
 num_bots = 4
-rand.seed()
 initial_num_types = 10*numParams*2
 num_champions=10
-num_childs = numParams*2 # per each champion
+#num_childs = numParams*2 # per each champion
+num_childs = 100
 print("num_childs: ", num_childs)
 num_tries = 80 # количество испытаний одного бота - испытано в test_mean для num_steps = 100
-num_gens = 8  # количество поколений
+num_gens = 3  # количество поколений
 mutType =1
-mutRate=0.0 3
+mutRate=0.03
+step_interval = 3
 
 genMeanScores = []
 ConnectomesHistory = []
@@ -39,25 +51,46 @@ champs=[]
 rows=[]
 now = datetime.datetime.now()
 print(now.strftime("%d-%m-%Y %H:%M"), "Arena started")
+
+def get_start_population(init_type: InitType, amount: int, filename=None) -> Population:
+    gen0 = Population()
+
+    if init_type == InitType.GENERATE:
+        return gen0.generate(amount)
+
+    if init_type == InitType.POPULATION:
+        gen0.import_from_file(filename)
+        return gen0
+
+    if init_type == InitType.FROM_CHAMPS:
+        gen0.import_from_file(filename)
+        return gen0.generate(amount)
+
+
+hyper_par = HyperParameters(mut_rate, step_interval)
+
 for j in range(num_gens):
-    if j>1 and (j+1)%3==0:
-        mutRate=mutRate/2
-    print("mutRate: ", mutRate)
+    hyper_par.update_rate(step = j)
+    print("mut_rate: ", hyper_par.mut_rate)
     bots = []
 
     # инициализация ботов
+    population = get_start_population(ini)
+
     bot_types = []
     connectomes = []
     meanScores = []
 
+
+
     if j == 0:
-        if firstGenGetFrom == 0: #случайная генерация
+        if FIRST_GEN_GET_FROM == 0: #случайная генерация
             actual_num_types = initial_num_types
             for ibottype in range(actual_num_types):  # посев одного поколения ботов
                 bot_types.append(bot( NN=NN, mutRate=mutRate))
                 connectomes.append(bot_types[ibottype].N)
         else: #чтение из файла
-            inputConnectomes = mc.readChamps(inputfilename, NN)
+            inputConnectomes = mc.readChamps(input_file_name, NN)
             actual_num_types = len(inputConnectomes)
             for ibottype in range(actual_num_types):
                 bot_types.append(bot( NN=NN, mutRate=mutRate))
@@ -71,7 +104,7 @@ for j in range(num_gens):
 
     else: #derive from previous generation
 
-        if firstGenGetFrom == 0:
+        if FIRST_GEN_GET_FROM == 0:
             actual_num_types=num_champions*num_childs
         else:
             if j == 1:
@@ -120,12 +153,12 @@ for j in range(num_gens):
         #now = datetime.datetime.now()
         #print(now.strftime("%d-%m-%Y %H:%M"), "ibottype: {1:d}; meanScore: {0:.3f}".format(meanScore, ibottype))
         # rows.append(Entry)
-        with open(FILENAME, "a", newline="") as file:
+        with open(OUTPUT_FILENAME, "a", newline="") as file:
             writer = csv.writer(file)
             writer.writerows([Entry])
     champs=sorted(champs, key= lambda x: x[2], reverse=True )
 
-    if firstGenGetFrom!=1 or j!=0:
+    if FIRST_GEN_GET_FROM!=1 or j!=0:
         champs=champs[0:num_champions]
 
     BotTypeHystory.append(bot_types)

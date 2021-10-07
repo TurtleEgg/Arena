@@ -1,6 +1,7 @@
 import numpy as np
 import math
 import numpy.random as rand
+from N_net_class import network
 
 
 def sum_of_squares(v):
@@ -11,9 +12,6 @@ def sum_of_squares(v):
 
 def magnitude(v):
     return math.sqrt(sum_of_squares(v))
-
-
-from N_net_class import network
 
 
 class field(object):
@@ -316,7 +314,7 @@ plt.show()
 print("genMeanScores: {}".format(genMeanScores))
 field1 = field()
 X, Y, Ins, Outs, Info = round(BotTypeHystory[0][0], field1, num_bots, num_steps, dt)
-print(Ins, Outs)
+#print(Ins, Outs)
 plot_round(X, Y, Ins, Outs)
 
 field1 = field()
