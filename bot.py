@@ -12,12 +12,13 @@ class Bot:
     ):
         self.motion = motion
         if net:
-            self.N = net
+            self.net = net
         else:
             self.NN = NN
             self.net = network(NN=self.NN, hyper_parameters=hyper_parameters)
 
-        self.Out = list(range(self.NN[2]))
+        self.score = 0
+        self.Out = list(range(self.net.No))
 
     def move(self, dt, ground_type, sound_level):
         # промежуток времени - постоянный
@@ -26,19 +27,25 @@ class Bot:
             self.motion.vel["x"],
             self.motion.vel["y"],
             ground_type,
-            soundlevel,
-            self.N_Out[3],
-            self.N_Out[4],
+            sound_level,
+            self.Out[3],
+            self.Out[4],
         ]
         # print(In)
-        [VL, VR, sound, Out1, Out2] = self.N.go(In)
+        [VL, VR, sound, Out1, Out2] = self.net.go(In)
         Out = [VL, VR, sound, Out1, Out2]
-        self.N_Out = Out.copy()
+        self.Out = Out.copy()
         self.motion.set_wheels({"left_wheel": Out[0], "right_wheel": Out[1]})
         self.motion.move(dt)
+
         return In, Out
 
     def make_child(self):
-        child_net = self.net.mutate()
-        child = Bot(net=child_net)
+        child_net = self.net
+        child_net.mutate()
+        child = Bot(net=child_net, motion=Motion())
+
         return child
+
+    def update_score(self, score):
+        self.score = score
