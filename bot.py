@@ -1,11 +1,11 @@
 from hyper_parameters import HyperParameters
 from motion import Motion
-from N_net_class import network
+from N_net_class import Network
 
 class Bot:
     def __init__(
         self,
-        net: network = None,
+        net: Network = None,
         NN: list = [4, 6, 6, 5],  # NL=1, Nn=6, Ni=4, No=3
         hyper_parameters=HyperParameters(),
         motion=Motion(),
@@ -15,7 +15,7 @@ class Bot:
             self.net = net
         else:
             self.NN = NN
-            self.net = network(NN=self.NN, hyper_parameters=hyper_parameters)
+            self.net = Network(NN=self.NN, hyper_parameters=hyper_parameters)
 
         self.score = 0
         self.Out = list(range(self.net.No))

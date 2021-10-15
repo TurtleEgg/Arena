@@ -6,7 +6,7 @@ import numpy as np
 import math
 import numpy.random as rand
 import matplotlib.pyplot as plt
-from N_net_class import network
+from N_net_class import Network
 import datetime
 import pandas as pd
 

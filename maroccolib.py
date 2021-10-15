@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 from hyper_parameters import HyperParameters
 from motion import Motion
-from N_net_class import network
+from N_net_class import Network
 
 
 class field:
@@ -234,7 +234,7 @@ def readChamps(inputfilename, file_NN):
         Wo = np.reshape(row[Wo_start:Wo_end], (input_No, input_Nn))
 
         Bo = np.reshape(row[Bo_start:Bo_end], (input_No))
-        N = network(file_NN, seed=0, mutType=1, mutRate=0.1)
+        N = Network(file_NN, seed=0, mutType=1, mutRate=0.1)
         N.W = W.copy()
         N.B = B.copy()
         N.Wi = Wi.copy()

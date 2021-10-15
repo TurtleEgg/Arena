@@ -3,7 +3,7 @@ import numpy.random as rand
 
 from hyper_parameters import HyperParameters
 
-class network(object):
+class Network(object):
     def __init__(self, NN, seed=0, hyper_parameters=HyperParameters()):
         #NL количество слоев
         #Nn количество нейронов в слое

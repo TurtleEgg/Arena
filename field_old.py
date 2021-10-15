@@ -1,7 +1,7 @@
 import numpy as np
 import math
 import numpy.random as rand
-from N_net_class import network
+from N_net_class import Network
 
 
 def sum_of_squares(v):
@@ -14,7 +14,7 @@ def magnitude(v):
     return math.sqrt(sum_of_squares(v))
 
 
-class field(object):
+class Field(object):
     def __init__(self):
         self.X1 = np.array([0.25, 0.75])
         self.X2 = np.array([0.75, 0.25])
@@ -104,7 +104,7 @@ class bot(object):
         self.VR = VR
         self.fi = fi
         NN = [1, 2, 4, 3]  # NL=1, Nn=6, Ni=4, No=3
-        self.N = network(NN, seed=0, mutType=1, mutRate=0.1)
+        self.N = Network(NN, seed=0, mutType=1, mutRate=0.1)
 
     def motion(self, VL, VR, dt):
         V = self.V
