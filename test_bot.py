@@ -31,6 +31,7 @@ for individual in pop.bots:
 
 
 Nm2 = pop.bots[0].net.Wi.copy()
-print(Nm1)
-print(Nm2)
+#print(Nm1)
+#print(Nm2)
+print("mutation matrix:")
 print(Nm2-Nm1)

@@ -64,6 +64,7 @@ class Network(object):
             L[:, iL] = np.sign(np.dot(W[:, :, iL], L[:, iL - 1]) + B[:, iL])
 
         Out = np.sign(np.dot(Wo, L[:, NL - 1]) + Bo)
+        print(f"Out: {Out}")
         self.L=L
         return Out
 

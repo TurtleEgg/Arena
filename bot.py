@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from hyper_parameters import HyperParameters
 from motion import Motion
 from N_net_class import Network
@@ -18,22 +20,32 @@ class Bot:
             self.net = Network(NN=self.NN, hyper_parameters=hyper_parameters)
 
         self.score = 0
-        self.Out = list(range(self.net.No))
+        self.broadcasted = 0
+        self.heared = 0
 
-    def move(self, dt, ground_type, sound_level):
+        self.Out = list(range(self.net.No))
+        self.motion_track = []
+
+    def move(self, dt, is_in_place: bool):
+        motion_record = deepcopy(self.motion)
+        self.motion_track.append(motion_record)
+
         # промежуток времени - постоянный
-        # print("groundtype: ", grtype)
+        if is_in_place:
+            ground_type = 1
+        else:
+            ground_type = 0
         In = [
             self.motion.vel["x"],
             self.motion.vel["y"],
             ground_type,
-            sound_level,
+            self.heared,
             self.Out[3],
             self.Out[4],
         ]
         # print(In)
-        [VL, VR, sound, Out1, Out2] = self.net.go(In)
-        Out = [VL, VR, sound, Out1, Out2]
+        [VL, VR, self.broadcasted, Out1, Out2] = self.net.go(In)
+        Out = [VL, VR, self.broadcasted, Out1, Out2]
         self.Out = Out.copy()
         self.motion.set_wheels({"left_wheel": Out[0], "right_wheel": Out[1]})
         self.motion.move(dt)
@@ -47,5 +59,9 @@ class Bot:
 
         return child
 
-    def update_score(self, score):
-        self.score = score
+    def add_score(self, delta_score):
+        self.score += delta_score
+
+    def set_heared(self, heared):
+        self.heared = heared
+
