@@ -44,6 +44,7 @@ class Network(object):
         self.Wo = -np.ones((No, Nn))+ 2 * rand.random((No, Nn))
 
     def go(self, In):
+        print( f"heared: {In[3]}")
         NL = self.NL
         Nn = self.Nn
         Ni = self.Ni

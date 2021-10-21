@@ -4,6 +4,8 @@ from hyper_parameters import HyperParameters
 from motion import Motion
 from N_net_class import Network
 
+TEAMMATE_COUNT = 3
+
 class Bot:
     def __init__(
         self,
@@ -35,11 +37,12 @@ class Bot:
             ground_type = 1
         else:
             ground_type = 0
+        heared_norm = self.heared/TEAMMATE_COUNT
         In = [
             self.motion.vel["x"],
             self.motion.vel["y"],
             ground_type,
-            self.heared,
+            heared_norm,
             self.Out[3],
             self.Out[4],
         ]
@@ -49,6 +52,8 @@ class Bot:
         self.Out = Out.copy()
         self.motion.set_wheels({"left_wheel": Out[0], "right_wheel": Out[1]})
         self.motion.move(dt)
+
+        self.heared = 0
 
         return In, Out
 
@@ -62,6 +67,6 @@ class Bot:
     def add_score(self, delta_score):
         self.score += delta_score
 
-    def set_heared(self, heared):
-        self.heared = heared
+    def add_heared(self, heared):
+        self.heared += heared
 

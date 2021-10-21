@@ -2,7 +2,7 @@ import numpy as np
 import math
 import numpy.random as rand
 
-from itertools import product
+from itertools import combinations
 from typing import List
 from numpy import array
 
@@ -66,9 +66,9 @@ class Arena(object):
                 is_resident = place.update_resident(bot.motion)
 
         # обеспечиваем слышимость
-        for bot1, bot2 in product(self.team, self.team):
-            bot1.set_heared(bot2.broadcasted)
-            bot2.set_heared(bot1.broadcasted)
+        for bot1, bot2 in combinations(self.team, 2):
+            bot1.add_heared(bot2.broadcasted*self._calc_heared_coeff(bot2.motion, bot1.motion))
+            bot2.add_heared(bot1.broadcasted*self._calc_heared_coeff(bot1.motion, bot2.motion))
 
         # движение ботов
         for bot in self.team:
@@ -79,6 +79,40 @@ class Arena(object):
                 if place.test_resident(bot.motion):
                     delta_score = dt * RESIDENTS_SCORE_MAP[place.residents_count]
                     bot.add_score(delta_score)
+
+    def _calc_heared_coeff(self, motion1: Motion, motion2: Motion):
+        """Слышимость от первого ко второму.
+        Зависит только от направления, не от расстояния.
+        Когда смотришь прямо на звук, коэффициент сигнала 1, когда спиной - 0.
+        Когда стоишь на месте - слышишь всё.
+        Когда расстояние равно нулю - слышишь всё независимо от направления.
+        """
+        x1 = motion1.pos["x"]
+        y1 = motion1.pos["y"]
+        x2 = motion2.pos["x"]
+        y2 = motion2.pos["y"]
+        v_x = motion2.pos["x"]
+        v_y = motion2.pos["y"]
+
+        # когда смотришь прямо на звук, коэффициент сигнала 1, когда спиной - 0
+        S = magnitude([x2 - x1, y2 - y1])
+        if S != 0:
+            # единичный вектор направления от источника к слушателю
+            n = np.array([(x2 - x1) / S, (y2 - y1) / S])
+            # единичный вектор направления взгляда
+            V = magnitude([v_x, v_y])
+            e_v = np.array([v_x / V, v_y / V])
+            if V != 0:
+                pr = np.dot(e_v, n)
+            else:
+                coeff = 1
+
+            coeff = 0.5 + pr/2
+        else:
+            pr = 0
+            coeff = 1
+        return coeff
+
 
 
 
