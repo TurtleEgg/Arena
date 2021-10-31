@@ -44,7 +44,7 @@ class Network(object):
         self.Wo = -np.ones((No, Nn))+ 2 * rand.random((No, Nn))
 
     def go(self, In):
-        print( f"heared: {In[3]}")
+        #print( f"heared: {In[3]}")
         NL = self.NL
         Nn = self.Nn
         Ni = self.Ni
@@ -58,14 +58,14 @@ class Network(object):
 
 
         L = np.zeros((Nn, NL)) #возбуждения нейронов
-
         L[:, 0] = np.sign(np.dot(Wi[:, 0], In) + Bi)
 
         for iL in range(1, NL):
             L[:, iL] = np.sign(np.dot(W[:, :, iL], L[:, iL - 1]) + B[:, iL])
 
-        Out = np.sign(np.dot(Wo, L[:, NL - 1]) + Bo)
-        print(f"Out: {Out}")
+        #Out = np.sign(np.dot(Wo, L[:, NL - 1]) + Bo)
+        Out = np.dot(Wo, L[:, NL - 1]) + Bo
+        #print(f"Out: {Out}")
         self.L=L
         return Out
 
@@ -126,7 +126,6 @@ class Network(object):
                 Mat[i] = randSingleUpdate(Mat[i], rate, dims)
             return Mat
 
-
         if mutType==1:
             # все веса и пороги меняются случайным образом, максимум на величину Rate
             self.B = randUpdate(B, rate, (Nn, NL))
@@ -135,8 +134,6 @@ class Network(object):
             self.Wi = randUpdate(Wi, rate, (Ni, Nn))
             self.Bo = randUpdate(Bo, rate, (No,)) #запятая висит потому что нужно сделать из integer - iterable object (список или кортеж)
             self.Wo = randUpdate(Wo, rate, (No, Nn))
-
-
 
         elif mutType==2:
             # меняется один случайный вес, максимум на величину rate
@@ -156,7 +153,6 @@ class Network(object):
             numWo = np.prod(Wonp.shape)
             numN = [numB, numW, numBi, numWi, numBo, numWo]
 
-
             # выбираем какую матрицу обновлять пропорционально количеству элементов в них
             choice=rand.randint(0,np.sum(numN))
             if choice<numN[0]:
@@ -173,8 +169,7 @@ class Network(object):
                 self.Wo = randSingleUpdate(Wo, rate, (No, Nn))
 
         else:
-            return 1
-        return 0
+            raise ValueError("incorrect mut_type")
 
 # Test
 

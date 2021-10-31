@@ -27,20 +27,20 @@ class Bot:
 
         self.Out = list(range(self.net.No))
         self.motion_track = []
+        self.io_track = []
 
-    def move(self, dt, is_in_place: bool):
+    def move(self, dt):
         motion_record = deepcopy(self.motion)
         self.motion_track.append(motion_record)
 
         # промежуток времени - постоянный
-        if is_in_place:
+        if self.is_in_place:
             ground_type = 1
         else:
             ground_type = 0
         heared_norm = self.heared/TEAMMATE_COUNT
         In = [
-            self.motion.vel["x"],
-            self.motion.vel["y"],
+            self.motion.velocity,
             ground_type,
             heared_norm,
             self.Out[3],
@@ -55,10 +55,12 @@ class Bot:
 
         self.heared = 0
 
+        self.io_track.append({"ground_type": ground_type, "heared": heared_norm, "in": (Out[3], Out[4]), "broadcasted": self.broadcasted})
+
         return In, Out
 
     def make_child(self):
-        child_net = self.net
+        child_net = deepcopy(self.net)
         child_net.mutate()
         child = Bot(net=child_net, motion=Motion())
 
@@ -69,4 +71,9 @@ class Bot:
 
     def add_heared(self, heared):
         self.heared += heared
+
+    def update_ground_type(self, is_in_place: bool):
+        self.is_in_place = is_in_place
+
+
 

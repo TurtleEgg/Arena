@@ -2,6 +2,7 @@ import numpy as np
 import math
 import numpy.random as rand
 
+from copy import deepcopy
 from itertools import combinations
 from typing import List
 from numpy import array
@@ -21,7 +22,16 @@ def sum_of_squares(v):
 def magnitude(v):
     return math.sqrt(sum_of_squares(v))
 
-RESIDENTS_SCORE_MAP = (0, 1, 2, -1, -2)
+RESIDENTS_SCORE_MAP = (0, 1, 2, -1, 2)
+
+
+class Team():
+    def __init__(self, bot, amount):
+        net = deepcopy(bot.net)
+        bots = []
+        for _ in range(amount):
+            bots.append(Bot(net=net, motion=Motion()))
+        self.bots = bots
 
 class Place:
     def __init__(self, coor: np.array, r=0.2):
@@ -42,14 +52,15 @@ class Place:
 
     def test_resident(self, motion: Motion) -> bool:
         bot_coor = array( [motion.pos["x"], motion.pos["y"]] )
-        if magnitude(self.coor - bot_coor) < self.r:
+        distance = magnitude(self.coor - bot_coor)
+        if distance < self.r:
             return True
         else:
             return False
 
 
 class Arena(object):
-    def __init__(self, team: List[Bot], r=0.2):
+    def __init__(self, team: Team, r=0.2):
         self.team = team
         place1 = Place(np.array([0.25, 0.75]), r=r)
         place2 = Place(np.array([0.75, 0.25]), r=r)
@@ -61,20 +72,23 @@ class Arena(object):
         for place in self.places:
             place.reinit_residents_count()
         # вычисляем is_in_place заодно записываем в месте количество резидентов
-        for bot in self.team:
+        for bot in self.team.bots:
+            bot.update_ground_type(False)
             for place in self.places:
                 is_resident = place.update_resident(bot.motion)
+                if is_resident:
+                    bot.update_ground_type(is_resident)
 
         # обеспечиваем слышимость
-        for bot1, bot2 in combinations(self.team, 2):
+        for bot1, bot2 in combinations(self.team.bots, 2):
             bot1.add_heared(bot2.broadcasted*self._calc_heared_coeff(bot2.motion, bot1.motion))
             bot2.add_heared(bot1.broadcasted*self._calc_heared_coeff(bot1.motion, bot2.motion))
 
         # движение ботов
-        for bot in self.team:
-            bot.move(dt, is_resident)
+        for bot in self.team.bots:
+            bot.move(dt)
         #добавляем очки
-        for bot in self.team:
+        for bot in self.team.bots:
             for place in self.places:
                 if place.test_resident(bot.motion):
                     delta_score = dt * RESIDENTS_SCORE_MAP[place.residents_count]
@@ -101,13 +115,14 @@ class Arena(object):
             n = np.array([(x2 - x1) / S, (y2 - y1) / S])
             # единичный вектор направления взгляда
             V = magnitude([v_x, v_y])
-            e_v = np.array([v_x / V, v_y / V])
             if V != 0:
+                e_v = np.array([v_x / V, v_y / V])
                 pr = np.dot(e_v, n)
+                coeff = 0.5 + pr / 2
             else:
+                pr = 0
                 coeff = 1
 
-            coeff = 0.5 + pr/2
         else:
             pr = 0
             coeff = 1

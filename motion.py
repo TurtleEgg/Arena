@@ -49,6 +49,11 @@ class Motion():
             y = uniform(-1, 1)
             self.t = {"x": x, "y": y}
 
+        V = array([self.vel["x"], self.vel["y"]])
+        self.velocity = magnitude(V)
+
+
+
     def set_wheels(self, m_wheels):
         self.m_wheels = m_wheels
 
@@ -90,5 +95,6 @@ class Motion():
         self.V = V
         self.vel["x"] = V[0]
         self.vel["y"] = V[1]
+        self.velocity = magnitude(V)
         self.pos["x"] = X
         self.pos["y"] = Y

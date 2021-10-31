@@ -1,7 +1,7 @@
 
 
 class HyperParameters():
-    def __init__(self, mut_type=1, mut_rate=0.05, step=0, step_interval=3):
+    def __init__(self, mut_type=1, mut_rate=0.05, step=0, step_interval=3000):
         self.mut_type = mut_type
         self.mut_rate = mut_rate
         self.step = step

@@ -1,3 +1,5 @@
+from random import sample
+
 from bot import Bot
 from hyper_parameters import HyperParameters
 from motion import Motion
@@ -9,7 +11,7 @@ class Population:
         self,
         amount,
         net: Network = None,
-        NN: list = [4, 6, 6, 5],  # NL=1, Nn=6, Ni=4, No=3
+        NN: list = [4, 6, 5, 5],  # NL=1, Nn=6, Ni=4, No=3
         hyper_parameters=HyperParameters(),
     ):
         self.amount = amount
@@ -49,8 +51,10 @@ class Population:
         pass
 
     def define_n_champions(self, n):
+        #self.champions = sample(self.bots, n) #случайный отбор
         sorted_bots = sorted(self.bots, key=lambda x: x.score, reverse=True)
         self.champions = sorted_bots[0:n]
+        print(f"champions: {self.champions}")
 
     def import_champions(self):
         pass
