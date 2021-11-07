@@ -64,11 +64,11 @@ class Cyclotron:
             self.population = Population(self.num_teams)
 
         if self.init_type == InitType.POPULATION:
-            gen0 = Population()
+            gen0 = Population(self.num_teams)
             self.population = gen0.import_from_file(filename)
 
         if self.init_type == InitType.FROM_CHAMPS:
-            gen0 = Population()
+            gen0 = Population(self.num_teams)
             gen0.import_from_file(filename)
             self.population = gen0.procreate(self.num_childs)
 

@@ -6,7 +6,7 @@ from motion import Motion
 from N_net_class import Network
 
 from cycler import cycler
-COLORS = ['blue', 'green', 'red', 'yellow'] #['r','b','m','g']
+COLORS = ['blue', 'green', 'red', 'orange'] #['r','b','m','g']
 custom_cycler = (cycler(color=COLORS))
 
 
@@ -36,11 +36,11 @@ def plot_round(arena, annotation_step:int=10):
         broadcasted = [io_record["broadcasted"] for io_record in bot.io_track]
         subplot(4, 2, i*2+2)
         sp = gca()
-        sp.set_ylim([-2, 2])
+        #sp.set_ylim([-2, 2])
         sp.plot(heared, label="h")
         sp.plot(broadcasted, label="b")
-        sp.legend(loc='best')
-        sp.title(COLORS[i])
+        #sp.legend(loc='best')
+        #sp.title(COLORS[i])
 
 
     show()
@@ -49,7 +49,8 @@ def _plot_info(subplot, motion_record: dict, io_record: dict):
     ground_type = io_record["ground_type"]
     heared = io_record["heared"]
     broadcasted = io_record["broadcasted"]
-    annotation = f"gr: {ground_type:d}\nh: {heared:0.2f}\nb: {broadcasted:0.2f}"
+    #annotation = f"gr: {ground_type:d}\nh: {heared:0.2f}\nb: {broadcasted:0.2f}"
+    annotation = f"h: {heared:0.2f}\nb: {broadcasted:0.2f}"
     x_i = motion_record.pos["x"]
     y_i = motion_record.pos["y"]
     subplot.annotate(annotation, (x_i, y_i))
