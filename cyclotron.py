@@ -35,9 +35,9 @@ class Cyclotron:
         input_file: str = None,
         output_file: str = None,
         hyper_parameters: HyperParameters = HyperParameters,
-        num_teams = 50,
-        num_champions = 5,
-        num_tests = 80,
+        num_teams = 100,
+        num_champions = 10,
+        num_tests = 100,
         num_steps = 50
 
     ):
@@ -76,6 +76,7 @@ class Cyclotron:
         now = datetime.datetime.now()
         print(now.strftime("%d-%m-%Y %H:%M"), "Cyclotron launched")
         for i in range(num_generations):
+            self.population.init_scores()
             now = datetime.datetime.now().strftime("%d-%m-%Y %H:%M")
             print(f"\n{now}: gen {i}")
             for bot in self.population.bots:

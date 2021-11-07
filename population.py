@@ -1,3 +1,4 @@
+import pickle
 from random import sample
 
 from bot import Bot
@@ -45,18 +46,26 @@ class Population:
 
 
     def import_from_file(self, filename):
-        pass
+        infile = open(filename, 'rb')
+        self.bots = pickle.load(infile)
+        infile.close()
 
     def export_to_file(self, filename):
-        pass
+        outfile = open(filename, 'wb')
+        pickle.dump(self.bots, outfile)
+        outfile.close()
 
     def define_n_champions(self, n):
         #self.champions = sample(self.bots, n) #случайный отбор
         sorted_bots = sorted(self.bots, key=lambda x: x.score, reverse=True)
         self.champions = sorted_bots[0:n]
-        print(f"champions: {self.champions}")
+        #print(f"champions: {self.champions}")
 
     def import_champions(self):
         pass
+
+    def init_scores(self):
+        for bot in self.bots:
+            bot.init_score()
 
 

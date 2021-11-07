@@ -69,6 +69,9 @@ class Bot:
     def add_score(self, delta_score):
         self.score += delta_score
 
+    def init_score(self):
+        self.score = 0
+
     def add_heared(self, heared):
         self.heared += heared
 
