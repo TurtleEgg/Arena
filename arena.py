@@ -81,7 +81,6 @@ class Arena(object):
 
         # обеспечиваем слышимость
         for bot1, bot2 in combinations(self.team.bots, 2):
-            #print(bot1, bot2)
             bot1.add_heared(bot2.broadcasted*self._calc_heared_coeff(bot2.motion, bot1.motion))
             bot2.add_heared(bot1.broadcasted*self._calc_heared_coeff(bot1.motion, bot2.motion))
 
@@ -106,8 +105,8 @@ class Arena(object):
         y1 = motion1.pos["y"]
         x2 = motion2.pos["x"]
         y2 = motion2.pos["y"]
-        v_x = motion2.pos["x"]
-        v_y = motion2.pos["y"]
+        v_x = motion2.vel["x"]
+        v_y = motion2.vel["y"]
 
         # когда смотришь прямо на звук, коэффициент сигнала 1, когда спиной - 0
         S = magnitude([x2 - x1, y2 - y1])
