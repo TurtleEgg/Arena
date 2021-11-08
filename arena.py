@@ -81,6 +81,7 @@ class Arena(object):
 
         # обеспечиваем слышимость
         for bot1, bot2 in combinations(self.team.bots, 2):
+            #print(bot1, bot2)
             bot1.add_heared(bot2.broadcasted*self._calc_heared_coeff(bot2.motion, bot1.motion))
             bot2.add_heared(bot1.broadcasted*self._calc_heared_coeff(bot1.motion, bot2.motion))
 

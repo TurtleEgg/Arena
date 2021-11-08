@@ -3,10 +3,11 @@ import sys
 sys.path.append("/home/Code/Arena/")
 sys.path.append("/home/Code/Arena/tests/")
 
+from colorama import init, Fore, Back, Style
 from matplotlib.pyplot import plot, show
 from numpy import mean, random
 
-import datetime
+from datetime import datetime
 from enum import Enum, unique
 from typing import Any, Dict, List, Set
 
@@ -19,8 +20,12 @@ from N_net_class import Network
 from plot import plot_round
 from population import Population
 
-random.seed()
 
+TIME_FORMAT = "%d-%m-%Y %H:%M"
+
+random.seed()
+# Initializes Colorama
+init(autoreset=True)
 
 class InitType(Enum):
     GENERATE = 0
@@ -73,12 +78,10 @@ class Cyclotron:
             self.population = gen0.procreate(self.num_childs)
 
     def grind(self, num_generations: int):
-        now = datetime.datetime.now()
-        print(now.strftime("%d-%m-%Y %H:%M"), "Cyclotron launched")
+        print(f"{datetime.now().strftime(TIME_FORMAT)} Cyclotron launched")
         for i in range(num_generations):
             self.population.init_scores()
-            now = datetime.datetime.now().strftime("%d-%m-%Y %H:%M")
-            print(f"\n{now}: gen {i}")
+            print(f"\n{datetime.now().strftime(TIME_FORMAT)}: gen {i}")
             for bot in self.population.bots:
                 score = []
                 for _ in range(self.num_tests):
@@ -97,6 +100,7 @@ class Cyclotron:
             self.population.procreate(self.num_childs)
             # print(f"\npopulation: {self.population.bots}")
             # print(f"champions: {self.population.champions}")
+        print(f"\n{datetime.now().strftime(TIME_FORMAT)}: \033[2;31;43m cyclotron finished \033[0;0m")
 
     def test_team(self, team) -> float:
         arena = Arena(team=team)
@@ -108,8 +112,7 @@ class Cyclotron:
         return mean_score
 
     def showmatch(self):
-        now = datetime.datetime.now().strftime("%d-%m-%Y %H:%M")
-        print(f"\n{now}: showmatch")
+        print(f"\n{datetime.now().strftime(TIME_FORMAT)}: showmatch")
         print(len(self.population.champions))
         for champion in self.population.champions:
             print(champion)
