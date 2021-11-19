@@ -33,21 +33,27 @@ class Population:
 
     def procreate(self, num_childs=10):
         child_bots = []
-        n_champs = self.amount // num_childs
-        self.define_n_champions(n_champs)
+        if not self.champions:
+            n_champs = self.amount // num_childs
+            self.define_n_champions(n_champs)
+
         for champion in self.champions:
-            for j in range(num_childs):
+            for _ in range(num_childs):
                 child = champion.make_child()
                 child_bots.append(child)
         for _ in range(self.amount % num_childs): #добиваем остаток первым чемпионом чтобы потомков было amount
+            print(self.champions)
             child = self.champions[0].make_child()
             child_bots.append(child)
         self.bots = child_bots.copy()
 
-
-    def import_from_file(self, filename):
+    def import_from_file(self, filename, input_is_champions = True):
         infile = open(filename, 'rb')
-        self.bots = pickle.load(infile)
+        if input_is_champions:
+            self.champions = pickle.load(infile)
+        else:
+            self.bots = pickle.load(infile)
+            self.amount = len(self.bots)
         infile.close()
 
     def export_to_file(self, filename):
@@ -61,8 +67,10 @@ class Population:
         self.champions = sorted_bots[0:n]
         #print(f"champions: {self.champions}")
 
-    def import_champions(self):
-        pass
+    def export_champions(self, filename):
+        outfile = open(filename, 'wb')
+        pickle.dump(self.champions, outfile)
+        outfile.close()
 
     def init_scores(self):
         for bot in self.bots:

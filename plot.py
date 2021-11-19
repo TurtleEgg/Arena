@@ -29,7 +29,7 @@ def plot_round(arena, annotation_step:int=10):
         for i, record in enumerate(zip(bot.motion_track, bot.io_track)):
             if i % annotation_step==0:
                 motion_record, io_record = record
-                _plot_info(ax, motion_record, io_record)
+                #_plot_info(ax, motion_record, io_record)
 
     for i, bot in enumerate(arena.team.bots):
         heared = [io_record["heared"] for io_record in bot.io_track]

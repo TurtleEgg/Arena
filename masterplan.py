@@ -1,11 +1,9 @@
 from cyclotron import Cyclotron
-#from cyclotron import InitType
-#tron = Cyclotron(num_champions = 10, num_teams = 100, init_type = InitType.POPULATION)
-tron = Cyclotron(num_champions = 20, num_teams = 200)
-tron.get_start_population()
-tron.population.import_from_file("125gen_10_100_001.dat")
-tron.grind(5)
-tron.population.export_to_file(".dat")
 from matplotlib.pyplot import plot, show
+tron = Cyclotron(num_champions=20, num_teams=200)
+#tron.get_start_population("population/350gen_20_200_ch.dat", input_is_champions=True)
+tron.get_start_population("population/350gen_20_200_ch.dat")
+tron.grind(120, dump_step=20)
+tron.export_champions(".dat")
 plot(tron.champ_scores); show()
 tron.showmatch()
