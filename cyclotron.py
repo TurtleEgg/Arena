@@ -100,7 +100,7 @@ class Cyclotron:
             self.champ_scores.append(self.population.champions[0].score)
 
             if dump_step:
-                if i % dump_step==0:
+                if (i+1) % dump_step==0:
                     self.export_champions(f"population/{i+1:03d}gen_ch.dat")
 
             self.population.procreate(self.num_childs)
