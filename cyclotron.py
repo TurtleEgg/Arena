@@ -51,7 +51,7 @@ class Cyclotron:
 
         self.champ_scores = []
 
-    def get_start_population(self, input_file="", input_is_champions = True) -> None:
+    def get_start_population(self, input_file=None, input_is_champions=True) -> None:
 
         if input_file:
             if input_is_champions:
