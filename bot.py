@@ -1,6 +1,6 @@
 from copy import deepcopy
+from typing import Any, Dict
 
-from hyper_parameters import HyperParameters
 from motion import Motion
 from N_net_class import Network
 
@@ -11,7 +11,6 @@ class Bot:
         self,
         net: Network = None,
         NN: list = [4, 6, 6, 5],  # NL=1, Nn=6, Ni=4, No=3
-        hyper_parameters=HyperParameters(),
         motion=Motion(),
     ):
         self.motion = motion
@@ -19,11 +18,12 @@ class Bot:
             self.net = net
         else:
             self.NN = NN
-            self.net = Network(NN=self.NN, hyper_parameters=hyper_parameters)
+            self.net = Network(NN=self.NN)
 
         self.score = 0
         self.broadcasted = 0
         self.heared = 0
+        self.is_in_place = False
 
         self.Out = list(range(self.net.No))
         self.motion_track = []
@@ -59,9 +59,9 @@ class Bot:
 
         return In, Out
 
-    def make_child(self):
+    def make_child(self, hyper_parameters: Dict[str, Any]={"mut_rate": 0.05, "mut_type": 1}):
         child_net = deepcopy(self.net)
-        child_net.mutate()
+        child_net.mutate(hyper_parameters=hyper_parameters)
         child = Bot(net=child_net, motion=Motion())
 
         return child
@@ -77,6 +77,3 @@ class Bot:
 
     def update_ground_type(self, is_in_place: bool):
         self.is_in_place = is_in_place
-
-
-

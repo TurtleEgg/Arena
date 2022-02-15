@@ -1,10 +1,12 @@
+from typing import Any, Dict, Tuple
+
 import numpy as np
 import numpy.random as rand
 
 from hyper_parameters import HyperParameters
 
 class Network(object):
-    def __init__(self, NN, seed=0, hyper_parameters=HyperParameters()):
+    def __init__(self, NN, seed=0):
         #NL количество слоев
         #Nn количество нейронов в слое
         #Ni количество входов
@@ -23,7 +25,13 @@ class Network(object):
         Ni = NN[2]
         No = NN[3]
 
-        self.hyper_parameters = hyper_parameters
+        self.dims = {"B": (Nn, NL),
+                     "W": (Nn, Nn, NL),
+                     "Bi": (Nn,),
+                     "Wi": (Ni, Nn),
+                     "Bo": (No,),
+                     "Wo": (No, Nn)}
+
         if seed==0:
             rand.seed()
             #seedo=rand.randint(0, 2 ** 16)
@@ -69,10 +77,10 @@ class Network(object):
         self.L=L
         return Out
 
-    def mutate(self):
+    def mutate(self, hyper_parameters: Dict[str, Any] = {"mut_rate": 0.05, "mut_type": 1}):
         rand.seed()
-        rate=self.hyper_parameters.mut_rate #максимально возможное изменение веса
-        mutType = self.hyper_parameters.mut_type
+        rate = hyper_parameters["mut_rate"]  # максимально возможное изменение веса
+        mutType = hyper_parameters["mut_type"]
         NL = self.NL
         Nn = self.Nn
         Ni = self.Ni

@@ -8,7 +8,6 @@ from typing import List
 from numpy import array
 
 from bot import Bot
-from hyper_parameters import HyperParameters
 from motion import Motion
 from N_net_class import Network
 
@@ -22,7 +21,8 @@ def sum_of_squares(v):
 def magnitude(v):
     return math.sqrt(sum_of_squares(v))
 
-RESIDENTS_SCORE_MAP = (0, 1, 2, -1, 2)
+RESIDENTS_SCORE_MAP = (0, 1, 1.1, -0.33, -0.5)
+MAX_HEARING_DISTANCE = 1
 
 
 class Team():
@@ -94,7 +94,7 @@ class Arena(object):
                     delta_score = dt * RESIDENTS_SCORE_MAP[place.residents_count]
                     bot.add_score(delta_score)
 
-    def _calc_heared_coeff(self, motion1: Motion, motion2: Motion):
+    def _calc_heared_coeff(self, motion1: Motion, motion2: Motion) -> float:
         """Слышимость от первого ко второму.
         Зависит только от направления, не от расстояния.
         Когда смотришь прямо на звук, коэффициент сигнала 1, когда спиной - 0.
@@ -110,7 +110,13 @@ class Arena(object):
 
         # когда смотришь прямо на звук, коэффициент сигнала 1, когда спиной - 0
         S = magnitude([x2 - x1, y2 - y1])
-        if S != 0:
+        if S >= MAX_HEARING_DISTANCE:
+            pr = 0
+            coeff = 0
+
+        elif S > 0:
+
+            k_s = MAX_HEARING_DISTANCE - S
             # единичный вектор направления от источника к слушателю
             n = np.array([(x2 - x1) / S, (y2 - y1) / S])
             # единичный вектор направления взгляда
@@ -123,18 +129,10 @@ class Arena(object):
                 pr = 0
                 coeff = 1
 
+            coeff = coeff * k_s
+
         else:
             pr = 0
             coeff = 1
+
         return coeff
-
-
-
-
-
-
-
-
-
-
-

@@ -4,10 +4,10 @@ sys.path.append("/home/Code/Arena/tests/")
 
 from bot import Bot
 
-bot = Bot(NN=[4, 6, 6, 5])
+bot = Bot(NN=[4, 6, 5, 5])
 
 print(bot.motion.pos)
-bot.move(0.1, 0, 1)
+bot.move(0.1)
 print(bot.motion.pos)
 
 from population import Population
