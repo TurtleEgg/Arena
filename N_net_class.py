@@ -3,8 +3,6 @@ from typing import Any, Dict, Tuple
 import numpy as np
 import numpy.random as rand
 
-from hyper_parameters import HyperParameters
-
 class Network(object):
     def __init__(self, NN, seed=0):
         #NL количество слоев

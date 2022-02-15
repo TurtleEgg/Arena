@@ -15,7 +15,6 @@ from typing import Any, Dict, List, Set
 
 from arena import Arena, Team
 from bot import Bot
-from hyper_parameters import HyperParameters
 from motion import Motion
 from N_net_class import Network
 from plot import plot_round
