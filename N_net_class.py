@@ -100,7 +100,8 @@ class Network(object):
             dim = dims.pop(0)
             for i in range(dim):
                 if len(dims)==0:
-                    delta=(-1+ 2 * rand.random(1) )
+                    #delta=(-1+ 2 * rand.random(1) )
+                    delta = rand.normal(0, 0.5)
                     #print(delta)
                     Mat[i] += rate * delta
                     Mat[i]=float(Mat[i]) #костыль чтобы не вылезали array()
