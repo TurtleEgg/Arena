@@ -4,9 +4,11 @@ sys.path.append("/home/Code/Arena/")
 sys.path.append("/home/Code/Arena/tests/")
 
 import multiprocessing as mp
+import pickle
 from colorama import init, Fore, Back, Style
 from matplotlib.pyplot import plot, show
 from numpy import mean, random
+
 
 from datetime import datetime
 from enum import Enum, unique
@@ -146,6 +148,18 @@ class Cyclotron:
                 arena.make_move(self.dt)
             plot_round(arena)
 
+
+def save_cyclotron(cyclotron: Cyclotron, filename: str):
+    outfile = open(filename, 'wb')
+    pickle.dump(cyclotron, outfile)
+    outfile.close()
+
+def load_cyclotron(filename: str) -> Cyclotron:
+    infile = open(filename, 'rb')
+    cyclotron = pickle.load(infile)
+    infile.close()
+
+    return cyclotron
 
 """
 cycletron = Cyclotron(init_type)
