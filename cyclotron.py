@@ -35,7 +35,7 @@ init(autoreset=True)
 class Cyclotron:
     def __init__(
         self,
-        hyper_parameters: Dict[str, Any] = {"mut_rate": 0.05, "mut_type": 1},
+        hyper_parameters: Dict[str, Any] = {"mut_rate": 0.1, "mut_type": 1},
         num_teams=100,
         num_champions=10,
         num_tests=100,
