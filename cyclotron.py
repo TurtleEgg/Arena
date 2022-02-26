@@ -131,16 +131,20 @@ class Cyclotron:
         output.put(score)
 
     def showmatch(self, index=None):
+        """index: индекс или кортеж параметров среза."""
         print(f"\n{datetime.now().strftime(TIME_FORMAT)}: showmatch")
         print(len(self.population.champions))
         print("Champions:")
+
         if index:
-            champions = [self.population.champions[index - 1]]
-        else:
+            indices = slice(*index) if isinstance(index, list) else slice(index)
             try:
-                champions = self.population.champions
+                champions = self.population.champions[indices]
             except (IndexError, TypeError):
                 raise Exception("Wrong index.")
+        else:
+            champions = self.population.champions
+
         for i, champion in enumerate(champions):
             print(f"      {i + 1:3d} / {len(self.population.champions):3d}")
             arena = Arena(team=Team(champion, self.num_bots_in_team))
