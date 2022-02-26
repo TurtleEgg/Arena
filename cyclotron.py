@@ -53,6 +53,7 @@ class Cyclotron:
         self.NN = [4, 6, 5, 5]
 
         self.champ_scores = []
+        self.step = 0
 
     def get_start_population(self, input_file=None, input_is_champions=True) -> None:
 
@@ -75,11 +76,11 @@ class Cyclotron:
 
     def grind_es(self, num_generations: int, dump_step=0):
         print(f"{datetime.now().strftime(TIME_FORMAT)} Cyclotron launched")
-        for i in range(num_generations):
+        for _ in range(num_generations):
             tic = datetime.today()
 
             self.population.init_scores()
-            print(f"\n{datetime.now().strftime(TIME_FORMAT)}: gen {i}")
+            print(f"\n{datetime.now().strftime(TIME_FORMAT)}: gen {self.step}")
             for bot in self.population.bots:
                 output = mp.Queue()
                 processes = [mp.Process(target=self.examine_bot, args=(bot, output)) for _ in range(self.num_tests)]
@@ -100,13 +101,15 @@ class Cyclotron:
             self.champ_scores.append(self.population.champions[0].score)
 
             if dump_step:
-                if (i + 1) % dump_step == 0:
-                    self.export_champions_to_file(f"population/{i + 1:03d}gen_ch.dat")
+                if (self.step + 1) % dump_step == 0:
+                    self.export_champions_to_file(f"population/{self.step + 1:03d}gen_ch.dat")
 
             scores = [bot.score for bot in self.population.bots]
             self.hyper_parameters = update_hyper_parameters(self.hyper_parameters, scores=scores)
 
             self.population.procreate(self.num_childs, hyper_parameters=self.hyper_parameters)
+
+            self.step += 1
 
             toc = datetime.today()
             delta = toc - tic
