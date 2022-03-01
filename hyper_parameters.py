@@ -13,7 +13,7 @@ def __init__(self, mut_type=1, mut_rate=0.05, step=0, step_interval=3000):
 
 
 def update_hyper_parameters(hyper_parameters, scores=None):
-    hyper_parameters["mut_rate"] = hyper_parameters["mut_rate"] * 0.9931
+    hyper_parameters["mut_rate"] = hyper_parameters["mut_rate"] * 0.9862327 # уполовинивается каждые 50 шагов
     print(f'{hyper_parameters["mut_rate"]=}')
     if scores:
         scores.sort(reverse=True)
