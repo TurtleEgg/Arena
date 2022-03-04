@@ -21,7 +21,7 @@ def sum_of_squares(v):
 def magnitude(v):
     return math.sqrt(sum_of_squares(v))
 
-RESIDENTS_SCORE_MAP = (0, 1, 1.1, -0.33, -0.5)
+RESIDENTS_SCORE_MAP = (0, 1, 1.1, -0.33, -0.25, -0.2, -0.17, -0.14, -0.125)
 MAX_HEARING_DISTANCE = 1
 
 

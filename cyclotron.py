@@ -46,7 +46,7 @@ class Cyclotron:
         self.num_teams = num_teams
         self.num_champions = num_champions
         self.num_childs = self.num_teams // self.num_champions
-        self.num_bots_in_team = 4
+        self.num_bots_in_team = 6
         self.num_tests = num_tests
         self.num_steps = num_steps
         self.dt = 1 / self.num_steps
