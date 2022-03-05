@@ -60,11 +60,11 @@ class Place:
 
 
 class Arena(object):
-    def __init__(self, team: Team, r=0.2):
+    def __init__(self, team: Team, feeder_params={"r": 0.2, "coors": [(0.25, 0.75), (0.75, 0.25), (0.25, 0.25), (0.75, 0.75)]},):
         self.team = team
-        place1 = Place(np.array([0.25, 0.75]), r=r)
-        place2 = Place(np.array([0.75, 0.25]), r=r)
-        self.places = (place1, place2)
+        self.r = feeder_params["r"]
+        self.places = [Place(np.array(coors), r=self.r) for coors in feeder_params["coors"]]
+
         self.score = 0
 
     def make_move(self, dt):

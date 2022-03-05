@@ -39,18 +39,22 @@ class Cyclotron:
         num_teams=100,
         num_champions=10,
         num_tests=100,
-        num_steps=50
+        num_steps=50,
+        num_bots_in_team = 5,
+        feeder_params={"r": 0.2, "coors": [(0.25, 0.75), (0.75, 0.25), (0.25, 0.25)]},
 
     ):
         self.hyper_parameters = hyper_parameters
         self.num_teams = num_teams
         self.num_champions = num_champions
         self.num_childs = self.num_teams // self.num_champions
-        self.num_bots_in_team = 6
+        self.num_bots_in_team = num_bots_in_team
         self.num_tests = num_tests
         self.num_steps = num_steps
         self.dt = 1 / self.num_steps
         self.NN = [4, 6, 5, 5]
+        self.feeder_params = feeder_params
+        self.num_feeders = len(feeder_params["coors"])
 
         self.champ_scores = []
 
@@ -61,7 +65,7 @@ class Cyclotron:
             self.population.import_from_file(input_file, input_is_champions=input_is_champions)
 
             if input_is_champions:
-                self.population.procreate(self.num_childs, hyper_parameters=hyper_parameters)
+                self.population.procreate(self.num_childs, hyper_parameters=self.hyper_parameters)
             else:
                 self.num_teams = self.population.amount
         else:
@@ -117,7 +121,7 @@ class Cyclotron:
         print(f"\n{datetime.now().strftime(TIME_FORMAT)}: \033[2;31;43m cyclotron finished \033[0;0m")
 
     def test_team(self, team) -> float:
-        arena = Arena(team=team)
+        arena = Arena(team=team, feeder_params = self.feeder_params)
         for move in range(self.num_steps):
             arena.make_move(self.dt)
         # plot_round(arena)
@@ -147,7 +151,7 @@ class Cyclotron:
 
         for i, champion in enumerate(champions):
             print(f"      {i + 1:3d} / {len(self.population.champions):3d}")
-            arena = Arena(team=Team(champion, self.num_bots_in_team))
+            arena = Arena(team=Team(champion, self.num_bots_in_team), feeder_params=self.feeder_params)
             for _ in range(self.num_steps):
                 arena.make_move(self.dt)
             plot_round(arena)
