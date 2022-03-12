@@ -37,7 +37,7 @@ def plot_round(arena, annotation_step:int=10):
     num_bots = len(arena.team.bots)
     for i, bot in enumerate(arena.team.bots):
         heared = [io_record["heared"] for io_record in bot.io_track]
-        broadcasted = [io_record["broadcasted"] for io_record in bot.io_track]
+        broadcasted = [io_record["output"]["broadcasted"] for io_record in bot.io_track]
         subplot(num_bots, 2, i*2+2)
         sp = gca()
         #sp.set_ylim([-2, 2])

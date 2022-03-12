@@ -38,6 +38,8 @@ class Bot:
             }
             self.net = Network(NN=self.NN)
 
+        self.shape = shape
+
         self.output = {
             "left_wheel": 0,
             "right_wheel": 0,
