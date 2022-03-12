@@ -8,14 +8,21 @@ from motion import Motion
 from N_net_class import Network
 from plot import plot_round
 
-NN = [4, 6, 5, 5]
-team = Team(Bot(NN=NN), 4)
+shape: dict = {
+    "sensors": 2,
+    "layers": 2,
+    "inner neurons": 3,
+    "inter neurons": 1,
+    "motors": 2,
+    "alphabet": 2,
+}
+team = Team(Bot(shape=shape), 4)
 
 arena = Arena(team=team)
 
-dt = 0.1
+dt = 0.2
 
-for move in range(10):
+for move in range(5):
     arena.make_move(dt)
     print(f"move: {move}" )
     for bot in arena.team.bots:
@@ -24,4 +31,4 @@ for move in range(10):
 score_team = sum([bot.score for bot in arena.team.bots])
 print(f"team score: {score_team}")
 
-plot_round(arena, annotation_step=5)
+plot_round(arena, annotation_step=1)

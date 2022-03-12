@@ -1,79 +1,48 @@
-from copy import deepcopy
-from typing import Any, Dict
+import sys
 
-from motion import Motion
-from N_net_class import Network
+sys.path.append("/home/Code/Arena/")
+sys.path.append("/home/Code/Arena/tests/")
 
-TEAMMATE_COUNT = 3
+from bot import Bot
 
-class Bot:
-    def __init__(
-        self,
-        net: Network = None,
-        NN: list = [4, 6, 6, 5],  # NL=1, Nn=6, Ni=4, No=3
-        motion=Motion(),
-    ):
-        self.motion = motion
-        if net:
-            self.net = net
-        else:
-            self.NN = NN
-            self.net = Network(NN=self.NN)
+shape: dict = {
+    "sensors": 2,
+    "layers": 2,
+    "inner neurons": 3,
+    "inter neurons": 1,
+    "motors": 2,
+    "alphabet": 2,
+}
+bot = Bot(shape=shape)
 
-        self.score = 0
-        self.broadcasted = 0
-        self.heared = 0
-        self.is_in_place = False
+print(bot.motion.pos)
+bot.move(0.1)
+print(bot.motion.pos)
+bot.move(0.1)
+bot.move(0.1)
 
-        self.Out = list(range(self.net.No))
-        self.motion_track = []
-        self.io_track = []
+from population import Population
 
-    def move(self, dt):
-        motion_record = deepcopy(self.motion)
-        self.motion_track.append(motion_record)
+pop = Population(4,shape=shape)
+Nm1 = pop.bots[0].net.Wi.copy()
 
-        # промежуток времени - постоянный
-        if self.is_in_place:
-            ground_type = 1
-        else:
-            ground_type = 0
-        heared_norm = self.heared/TEAMMATE_COUNT
-        In = [
-            self.motion.velocity,
-            ground_type,
-            heared_norm,
-            self.Out[3],
-            self.Out[4],
-        ]
-        # print(In)
-        [VL, VR, self.broadcasted, Out1, Out2] = self.net.go(In)
-        Out = [VL, VR, self.broadcasted, Out1, Out2]
-        self.Out = Out.copy()
-        self.motion.set_wheels({"left_wheel": Out[0], "right_wheel": Out[1]})
-        self.motion.move(dt)
+for individual in pop.bots:
+    print(individual.motion.pos)
+    # print(individual.net.Wi)
+    # print(individual.net.Wo)
+    # print(individual.net.W)
 
-        self.heared = 0
+pop.procreate(num_childs=2)
 
-        self.io_track.append({"ground_type": ground_type, "heared": heared_norm, "in": (Out[3], Out[4]), "broadcasted": self.broadcasted})
+for individual in pop.bots:
+    print(individual.motion.pos)
+    # print(individual.net.Wi)
+    # print(individual.net.Wo)
+    # print(individual.net.W)
 
-        return In, Out
 
-    def make_child(self, hyper_parameters: Dict[str, Any]={"mut_rate": 0.05, "mut_type": 1}):
-        child_net = deepcopy(self.net)
-        child_net.mutate(hyper_parameters=hyper_parameters)
-        child = Bot(net=child_net, motion=Motion())
-
-        return child
-
-    def add_score(self, delta_score):
-        self.score += delta_score
-
-    def init_score(self):
-        self.score = 0
-
-    def add_heared(self, heared):
-        self.heared += heared
-
-    def update_ground_type(self, is_in_place: bool):
-        self.is_in_place = is_in_place
+Nm2 = pop.bots[0].net.Wi.copy()
+# print(Nm1)
+# print(Nm2)
+print("mutation matrix:")
+print(Nm2 - Nm1)

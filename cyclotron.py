@@ -52,7 +52,7 @@ class Cyclotron:
         self.num_tests = num_tests
         self.num_steps = num_steps
         self.dt = 1 / self.num_steps
-        self.NN = [4, 6, 5, 5]
+        self.shape: dict = {"sensors": 2, "layers": 2, "inner neurons": 6, "inter neurons": 3, "motors": 2, "alphabet": 2}
         self.feeder_params = feeder_params
         self.num_feeders = len(feeder_params["coors"])
 
@@ -61,7 +61,7 @@ class Cyclotron:
     def get_start_population(self, input_file=None, input_is_champions=True) -> None:
 
         if input_file:
-            self.population = Population(0, NN=self.NN)
+            self.population = Population(0, shape=self.shape)
             self.population.import_from_file(input_file, input_is_champions=input_is_champions)
 
             if input_is_champions:
@@ -69,7 +69,7 @@ class Cyclotron:
             else:
                 self.num_teams = self.population.amount
         else:
-            self.population = Population(self.num_teams, NN=self.NN)
+            self.population = Population(self.num_teams, shape=self.shape)
 
     def export_population_to_file(self, output_file):
         self.population.export_to_file(output_file)
@@ -134,14 +134,14 @@ class Cyclotron:
         score = self.test_team(team)
         output.put(score)
 
-    def showmatch(self, index=None):
+    def showmatch(self, index=None, annotation_step=10):
         """index: индекс или кортеж параметров среза."""
         print(f"\n{datetime.now().strftime(TIME_FORMAT)}: showmatch")
         print(len(self.population.champions))
         print("Champions:")
 
         if index:
-            indices = slice(*index) if isinstance(index, list) else slice(index)
+            indices = slice(*index) if isinstance(index, list) else slice([index])
             try:
                 champions = self.population.champions[indices]
             except (IndexError, TypeError):
@@ -154,7 +154,7 @@ class Cyclotron:
             arena = Arena(team=Team(champion, self.num_bots_in_team), feeder_params=self.feeder_params)
             for _ in range(self.num_steps):
                 arena.make_move(self.dt)
-            plot_round(arena)
+            plot_round(arena, annotation_step=annotation_step)
 
 
 def save_cyclotron(cyclotron: Cyclotron, filename: str):

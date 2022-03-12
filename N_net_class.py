@@ -14,21 +14,18 @@ class Network(object):
         #mutType =2 - меняется один нейрон
         #NN:
         # NL = 1, Nn = 2, Ni = 10, No = 4
-        self.NL = NN[0]
-        self.Nn = NN[1]
-        self.Ni = NN[2]
-        self.No = NN[3]
-        NL = NN[0]
-        Nn = NN[1]
-        Ni = NN[2]
-        No = NN[3]
 
-        self.dims = {"B": (Nn, NL),
-                     "W": (Nn, Nn, NL),
-                     "Bi": (Nn,),
-                     "Wi": (Ni, Nn),
-                     "Bo": (No,),
-                     "Wo": (No, Nn)}
+        self.NL = NN["layers"]
+        self.Nn = NN["inner neurons"]
+        self.Ni = NN["input neurons"]
+        self.No = NN["output neurons"]
+
+        self.dims = {"B": (self.Nn, self.NL),
+                     "W": (self.Nn, self.Nn, self.NL),
+                     "Bi": (self.Nn,),
+                     "Wi": (self.Ni, self.Nn),
+                     "Bo": (self.No,),
+                     "Wo": (self.No, self.Nn)}
 
         if seed==0:
             rand.seed()
@@ -42,54 +39,31 @@ class Network(object):
         # W - матрицы весов
         # B - векторы порогов
         # Инициализируются случайные значения в диапазоне -1..1
-        self.B = -np.ones((Nn, NL)) + 2 * rand.random((Nn, NL))
-        self.W = -np.ones((Nn, Nn, NL))+ 2 * rand.random((Nn, Nn, NL))
-        self.Bi = -np.ones((Nn))+ 2 * rand.random((Nn))
-        self.Wi = -np.ones((Ni, Nn))+ 2 * rand.random((Ni, Nn))
-        self.Bo = -np.ones((No))+ 2 * rand.random((No))
-        self.Wo = -np.ones((No, Nn))+ 2 * rand.random((No, Nn))
+        self.B = -np.ones(self.dims["B"]) + 2 * rand.random(self.dims["B"])
+        self.W = -np.ones(self.dims["W"]) + 2 * rand.random(self.dims["W"])
+        self.Bi = -np.ones((self.Nn)) + 2 * rand.random((self.Nn))
+        self.Wi = -np.ones((self.Ni, self.Nn)) + 2 * rand.random((self.Ni, self.Nn))
+        self.Bo = -np.ones((self.No)) + 2 * rand.random((self.No))
+        self.Wo = -np.ones((self.No, self.Nn)) + 2 * rand.random((self.No, self.Nn))
 
     def go(self, In):
-        #print( f"heared: {In[3]}")
-        NL = self.NL
-        Nn = self.Nn
-        Ni = self.Ni
-        No = self.No
-        B= self.B
-        W= self.W
-        Bi=self.Bi
-        Wi=self.Wi
-        Bo=self.Bo
-        Wo=self.Wo
+        L = np.zeros((self.Nn, self.NL))  # возбуждения нейронов
+        L[:, 0] = np.sign(np.dot(self.Wi[:, 0], In) + self.Bi)
 
+        for iL in range(1, self.NL):
+            L[:, iL] = np.sign(np.dot(self.W[:, :, iL], L[:, iL - 1]) + self.B[:, iL])
 
-        L = np.zeros((Nn, NL)) #возбуждения нейронов
-        L[:, 0] = np.sign(np.dot(Wi[:, 0], In) + Bi)
+        # Out = np.sign(np.dot(Wo, L[:, NL - 1]) + Bo)
+        Out = np.dot(self.Wo, L[:, self.NL - 1]) + self.Bo
+        # print(f"Out: {Out}")
+        self.L = L
 
-        for iL in range(1, NL):
-            L[:, iL] = np.sign(np.dot(W[:, :, iL], L[:, iL - 1]) + B[:, iL])
-
-        #Out = np.sign(np.dot(Wo, L[:, NL - 1]) + Bo)
-        Out = np.dot(Wo, L[:, NL - 1]) + Bo
-        #print(f"Out: {Out}")
-        self.L=L
         return Out
 
     def mutate(self, hyper_parameters: Dict[str, Any] = {"mut_rate": 0.05, "mut_type": 1}):
         rand.seed()
         rate = hyper_parameters["mut_rate"]  # максимально возможное изменение веса
         mutType = hyper_parameters["mut_type"]
-        NL = self.NL
-        Nn = self.Nn
-        Ni = self.Ni
-        No = self.No
-        B = self.B
-        W = self.W
-        Bi = self.Bi
-        Wi = self.Wi
-        Bo = self.Bo
-        Wo = self.Wo
-
 
         def randUpdate(Mat, rate, dims):
             # dims=dimensions длины сторон матрицы (iterable of integers)
@@ -135,45 +109,47 @@ class Network(object):
 
         if mutType==1:
             # все веса и пороги меняются случайным образом, максимум на величину Rate
-            self.B = randUpdate(B, rate, (Nn, NL))
-            self.W = randUpdate(W, rate, (Nn, Nn, NL))
-            self.Bi = randUpdate(Bi, rate, (Nn,)) #запятая висит потому что нужно сделать из integer - iterable object (список или кортеж)
-            self.Wi = randUpdate(Wi, rate, (Ni, Nn))
-            self.Bo = randUpdate(Bo, rate, (No,)) #запятая висит потому что нужно сделать из integer - iterable object (список или кортеж)
-            self.Wo = randUpdate(Wo, rate, (No, Nn))
+            self.B = randUpdate(self.B, rate, (self.Nn, self.NL))
+            self.W = randUpdate(self.W, rate, (self.Nn, self.Nn, self.NL))
+            self.Bi = randUpdate(self.Bi, rate, (
+            self.Nn,))  # запятая висит потому что нужно сделать из integer - iterable object (список или кортеж)
+            self.Wi = randUpdate(self.Wi, rate, (self.Ni, self.Nn))
+            self.Bo = randUpdate(self.Bo, rate, (
+            self.No,))  # запятая висит потому что нужно сделать из integer - iterable object (список или кортеж)
+            self.Wo = randUpdate(self.Wo, rate, (self.No, self.Nn))
 
         elif mutType==2:
             # меняется один случайный вес, максимум на величину rate
 
             # подсчитываем количество элементов
-            Bnp = np.array(B)
+            Bnp = np.array(self.B)
             numB = np.prod(Bnp.shape)
-            Wnp=np.array(W)
-            numW=np.prod(Wnp.shape)
-            Binp = np.array(Bi)
+            Wnp = np.array(self.W)
+            numW = np.prod(Wnp.shape)
+            Binp = np.array(self.Bi)
             numBi = np.prod(Binp.shape)
-            Winp = np.array(Wi)
+            Winp = np.array(self.Wi)
             numWi = np.prod(Winp.shape)
-            Bonp = np.array(Bo)
+            Bonp = np.array(self.Bo)
             numBo = np.prod(Bonp.shape)
-            Wonp = np.array(Wo)
+            Wonp = np.array(self.Wo)
             numWo = np.prod(Wonp.shape)
             numN = [numB, numW, numBi, numWi, numBo, numWo]
 
             # выбираем какую матрицу обновлять пропорционально количеству элементов в них
             choice=rand.randint(0,np.sum(numN))
-            if choice<numN[0]:
-                self.B = randSingleUpdate(B, rate, (Nn, NL))
-            if choice<sum(numN[0:1]):
-                self.W = randSingleUpdate(W, rate, (Nn, Nn, NL))
-            if choice<sum(numN[0:2]):
-                self.Bi = randSingleUpdate(Bi, rate, (Nn,))
-            if choice<sum(numN[0:3]):
-                self.Wi = randSingleUpdate(Wi, rate, (Ni, Nn))
-            if choice<sum(numN[0:4]):
-                self.Bo = randSingleUpdate(Bo, rate, (No,))
-            if choice<sum(numN[0:5]):
-                self.Wo = randSingleUpdate(Wo, rate, (No, Nn))
+            if choice < numN[0]:
+                self.B = randSingleUpdate(self.B, rate, (self.Nn, self.NL))
+            if choice < sum(numN[0:1]):
+                self.W = randSingleUpdate(self.W, rate, (self.Nn, self.Nn, self.NL))
+            if choice < sum(numN[0:2]):
+                self.Bi = randSingleUpdate(self.Bi, rate, (self.Nn,))
+            if choice < sum(numN[0:3]):
+                self.Wi = randSingleUpdate(self.Wi, rate, (self.Ni, self.Nn))
+            if choice < sum(numN[0:4]):
+                self.Bo = randSingleUpdate(self.Bo, rate, (self.No,))
+            if choice < sum(numN[0:5]):
+                self.Wo = randSingleUpdate(self.Wo, rate, (self.No, self.Nn))
 
         else:
             raise ValueError("incorrect mut_type")

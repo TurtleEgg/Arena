@@ -30,7 +30,7 @@ class Team():
         net = deepcopy(bot.net)
         bots = []
         for _ in range(amount):
-            bots.append(Bot(net=net, motion=Motion()))
+            bots.append(Bot(net=net, shape=bot.shape, motion=Motion()))
         self.bots = bots
 
 class Place:
@@ -81,8 +81,8 @@ class Arena(object):
 
         # обеспечиваем слышимость
         for bot1, bot2 in combinations(self.team.bots, 2):
-            bot1.add_heared(bot2.broadcasted*self._calc_heared_coeff(bot2.motion, bot1.motion))
-            bot2.add_heared(bot1.broadcasted*self._calc_heared_coeff(bot1.motion, bot2.motion))
+            bot1.add_heared(np.multiply(bot2.output["broadcasted"], self._calc_heared_coeff(bot2.motion, bot1.motion)))
+            bot2.add_heared(np.multiply(bot1.output["broadcasted"], self._calc_heared_coeff(bot1.motion, bot2.motion)))
 
         # движение ботов
         for bot in self.team.bots:

@@ -12,12 +12,14 @@ class Population:
         self,
         amount,
         net: Network = None,
-        NN: list = [4, 6, 5, 5],  # NL=1, Nn=6, Ni=4, No=3
+        shape: dict = {"sensors": 3, "layers": 4, "inner neurons": 6, "inter neurons": 6, "motors": 2,
+                       "alphabet": 5},
+
     ):
         self.amount = amount
         self.bots = []
         self.champions = None
-        self.NN = NN
+        self.shape = shape
         if net:
             for ibottype in range(amount):  # посев одного поколения ботов
                 self.bots.append(
@@ -26,7 +28,7 @@ class Population:
         else:
             for ibottype in range(amount):  # посев одного поколения ботов
                 self.bots.append(
-                    Bot(NN=NN, motion=Motion())
+                    Bot(shape=shape, motion=Motion())
                 )
 
 
