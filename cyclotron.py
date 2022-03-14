@@ -6,6 +6,7 @@ sys.path.append("/home/Code/Arena/tests/")
 import multiprocessing as mp
 import pickle
 from colorama import init, Fore, Back, Style
+from collections.abc import Iterable
 from matplotlib.pyplot import plot, show
 from numpy import mean, random
 
@@ -55,6 +56,7 @@ class Cyclotron:
         self.shape: dict = {"sensors": 2, "layers": 2, "inner neurons": 6, "inter neurons": 3, "motors": 2, "alphabet": 2}
         self.feeder_params = feeder_params
         self.num_feeders = len(feeder_params["coors"])
+        self.population = None
 
         self.champ_scores = []
 
@@ -82,7 +84,12 @@ class Cyclotron:
         for i in range(num_generations):
             tic = datetime.today()
 
+            if not self.population:
+                print("No start population found, getting one with default arguments.")
+                self.get_start_population()
+
             self.population.init_scores()
+
             print(f"\n{datetime.now().strftime(TIME_FORMAT)}: gen {i}")
             for bot in self.population.bots:
                 output = mp.Queue()
@@ -135,15 +142,19 @@ class Cyclotron:
         output.put(score)
 
     def showmatch(self, index=None, annotation_step=10):
-        """index: индекс или кортеж параметров среза."""
+        """index: индекс или кортеж параметров среза.
+        Начинается от 0"""
         print(f"\n{datetime.now().strftime(TIME_FORMAT)}: showmatch")
-        print(len(self.population.champions))
         print("Champions:")
 
         if index:
-            indices = slice(*index) if isinstance(index, list) else slice([index])
+            is_list = isinstance(index, Iterable)
+            indices = slice(*index) if is_list else index
             try:
-                champions = self.population.champions[indices]
+                if not is_list:
+                    champions = [self.population.champions[indices]]
+                else:
+                    champions = self.population.champions[indices]
             except (IndexError, TypeError):
                 raise Exception("Wrong index.")
         else:

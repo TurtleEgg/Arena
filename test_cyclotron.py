@@ -6,7 +6,7 @@ TIME_DELTA_FORMAT = "%H:%M:%S"
 TO_MINUTES = 1 / 60
 
 
-tron = Cyclotron(num_teams=4, num_champions=2, num_tests = 1)
+tron = Cyclotron(num_teams=8, num_champions=4, num_tests = 1)
 #tron.get_start_population("champs.dat", input_is_champions=True)
 tron.get_start_population()
 
