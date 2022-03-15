@@ -101,7 +101,7 @@ class Cyclotron:
 
                 score = [output.get() for p in processes]
 
-                
+                bot.add_score(mean(score))
                 # print(f"bot_score = {bot.score:.4f}")
             self.population.define_n_champions(self.num_champions)
 
