@@ -41,8 +41,8 @@ class Cyclotron:
         num_champions=10,
         num_tests=100,
         num_steps=50,
-        num_bots_in_team = 5,
-        feeder_params={"r": 0.2, "coors": [(0.25, 0.75), (0.75, 0.25), (0.25, 0.25)]},
+        num_bots_in_team = 4,
+        feeder_params={"r": 0.2, "coors": [(0.25, 0.75), (0.75, 0.25)]},
         shape: dict = {"sensors": 2, "layers": 2, "inner neurons": 6, "inter neurons": 3, "motors": 2, "alphabet": 2}
 
     ):
