@@ -43,6 +43,7 @@ class Cyclotron:
         num_steps=50,
         num_bots_in_team = 5,
         feeder_params={"r": 0.2, "coors": [(0.25, 0.75), (0.75, 0.25), (0.25, 0.25)]},
+        shape: dict = {"sensors": 2, "layers": 2, "inner neurons": 6, "inter neurons": 3, "motors": 2, "alphabet": 2}
 
     ):
         self.hyper_parameters = hyper_parameters
@@ -53,7 +54,7 @@ class Cyclotron:
         self.num_tests = num_tests
         self.num_steps = num_steps
         self.dt = 1 / self.num_steps
-        self.shape: dict = {"sensors": 2, "layers": 2, "inner neurons": 6, "inter neurons": 3, "motors": 2, "alphabet": 2}
+        self.shape = shape
         self.feeder_params = feeder_params
         self.num_feeders = len(feeder_params["coors"])
         self.population = None

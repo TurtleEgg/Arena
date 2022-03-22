@@ -11,7 +11,7 @@ tron = Cyclotron(num_teams=8, num_champions=4, num_tests = 1)
 tron.get_start_population()
 
 tic = datetime.today()
-tron.grind_es(2, dump_step=0)
+tron.grind_es(4, dump_step=0)
 toc = datetime.today()
 delta = toc-tic
 delta_s = delta.total_seconds()
