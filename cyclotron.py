@@ -142,6 +142,10 @@ class Cyclotron:
         score = self.test_team(team)
         output.put(score)
 
+    def plot_scores(self):
+        plot(self.champ_scores)
+        show()
+
     def showmatch(self, index=None, annotation_step=10):
         """index: индекс или кортеж параметров среза.
         Начинается от 0"""
