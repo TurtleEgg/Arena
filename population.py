@@ -45,7 +45,6 @@ class Population:
                 child = champion.make_child(hyper_parameters=hyper_parameters)
                 child_bots.append(child)
         for _ in range(self.amount % num_childs): #добиваем остаток первым чемпионом чтобы потомков было amount
-            print(self.champions)
             child = self.champions[0].make_child(hyper_parameters=hyper_parameters)
             child_bots.append(child)
         self.bots = child_bots.copy()

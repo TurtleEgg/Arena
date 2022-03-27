@@ -120,9 +120,10 @@ class Cyclotron:
                 # print(f"bot_score = {bot.score:.4f}")
             self.population.define_n_champions(self.num_champions)
 
-            for champion in self.population.champions[0:3]:
-                #    print(f"\nchampion: {champion}")
-                print(f"champion score: {champion.score:.4f}")
+            champion_score = self.population.champions[0].score
+            print(f"champion score: {champion_score:.4f}")
+            for champion in self.population.champions[1:3]:
+                print(f"behind champion at: {champion_score-champion.score:.5f}")
 
             self.gen += 1
             self.champ_scores.append(self.population.champions[0].score)
