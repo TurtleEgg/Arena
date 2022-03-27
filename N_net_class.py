@@ -1,3 +1,4 @@
+from functools import reduce
 from typing import Any, Dict, Tuple
 
 import numpy as np
@@ -154,5 +155,17 @@ class Network(object):
         else:
             raise ValueError("incorrect mut_type")
 
-# Test
+
+def _calc_one_amount(dims: Tuple) -> int:
+    get_product = lambda a, b: a * b
+
+    return reduce(get_product, dims)
+
+def calc_amount(dims: dict) -> int:
+    amount = 0
+    for key in dims:
+        amount += _calc_one_amount(dims[key])
+
+    return amount
+
 

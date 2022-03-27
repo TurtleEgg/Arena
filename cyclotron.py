@@ -19,7 +19,7 @@ from typing import Any, Dict, List, Set
 from arena import Arena, Team
 from bot import Bot
 from motion import Motion
-from N_net_class import Network
+from N_net_class import Network, calc_amount
 from plot import plot_round
 from population import Population
 from hyper_parameters import update_hyper_parameters
@@ -32,13 +32,18 @@ random.seed()
 # Initializes Colorama
 init(autoreset=True)
 
+def calc_total_connections(shape):
+    bot = Bot(shape=shape)
+    dims = bot.net.dims
+
+    return calc_amount(dims)
 
 class Cyclotron:
     def __init__(
         self,
         hyper_parameters: Dict[str, Any] = {"mut_rate": 0.03, "mut_type": 1},
-        num_teams=100,
-        num_champions=10,
+        num_teams=None,
+        num_champions=None,
         num_tests=100,
         num_steps=50,
         num_bots_in_team = 4,
@@ -46,9 +51,17 @@ class Cyclotron:
         shape: dict = {"sensors": 2, "layers": 2, "inner neurons": 6, "inter neurons": 3, "motors": 2, "alphabet": 5}
 
     ):
-        self.hyper_parameters = hyper_parameters
+        if not num_teams:
+            total_connections = calc_total_connections(shape)
+            num_teams = total_connections * 3
         self.num_teams = num_teams
+        if not num_champions:
+            total_connections = calc_total_connections(shape)
+            num_champions = total_connections * 3 // 5
         self.num_champions = num_champions
+        print(f"{num_champions=}, {num_teams=}")
+
+        self.hyper_parameters = hyper_parameters
         self.num_childs = self.num_teams // self.num_champions
         self.num_bots_in_team = num_bots_in_team
         self.num_tests = num_tests
@@ -58,6 +71,7 @@ class Cyclotron:
         self.feeder_params = feeder_params
         self.num_feeders = len(feeder_params["coors"])
         self.population = None
+
 
         self.champ_scores = []
 
