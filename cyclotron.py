@@ -72,7 +72,7 @@ class Cyclotron:
         self.num_feeders = len(feeder_params["coors"])
         self.population = None
 
-
+        self.gen = 1
         self.champ_scores = []
 
     def get_start_population(self, input_file=None, input_is_champions=True) -> None:
@@ -105,7 +105,7 @@ class Cyclotron:
 
             self.population.init_scores()
 
-            print(f"\n{datetime.now().strftime(TIME_FORMAT)}: gen {i}")
+            print(f"\n{datetime.now().strftime(TIME_FORMAT)}: gen {self.gen}")
             for bot in self.population.bots:
                 output = mp.Queue()
                 processes = [mp.Process(target=self.examine_bot, args=(bot, output)) for _ in range(self.num_tests)]
@@ -123,7 +123,10 @@ class Cyclotron:
             for champion in self.population.champions:
                 #    print(f"\nchampion: {champion}")
                 print(f"champion score: {champion.score:.4f}")
+
+            self.gen += 1
             self.champ_scores.append(self.population.champions[0].score)
+
 
             if dump_step:
                 if (i + 1) % dump_step == 0:
